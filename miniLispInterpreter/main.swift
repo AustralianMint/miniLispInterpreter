@@ -7,5 +7,16 @@
 
 import Foundation
 
-print("Hello, World!")
+let interpreter = Interpreter()
+let input = "(- 20 1 4)"
+
+// Parsers breaks input into pieces
+let tokens = Parser.tokenize(input)
+
+// Parser organizes into a structure
+let (parsed, _) = try Parser.parse(tokens)
+
+// Interpreter calculates the result
+let result = try interpreter.evaluate(parsed)
+print(result)
 
