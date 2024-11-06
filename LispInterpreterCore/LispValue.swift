@@ -6,7 +6,7 @@
 
 // Needed to specify which values the interpreter understands
 
-indirect enum LispValue {
+public enum LispValue {
     case symbol(String)
     case number(Double)
     case list([LispValue])

@@ -6,7 +6,7 @@
 
 // Handles things that can go wrong
 
-enum LispError: Error {
+public enum LispError: Error {
     case syntaxError(String)
     case typeError(String)
     case nameError(String)

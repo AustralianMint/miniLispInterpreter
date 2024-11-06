@@ -6,7 +6,7 @@
 
 // The brain that actually does the calculations
 
-class Interpreter {
+public class Interpreter {
     var environment: [String: LispValue] = [:]
     
     init () {
