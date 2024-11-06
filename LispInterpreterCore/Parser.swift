@@ -6,7 +6,7 @@
 
 // Takes the input and transform into something the computer understands.
 
-class Parser {
+public class Parser {
     static func tokenize(_ input: String) -> [String] {
         let input = input.replacingOccurrences(of: "(", with: " ( ")
             .replacingOccurrences(of: ")", with: " ) ")
