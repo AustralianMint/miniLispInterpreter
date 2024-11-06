@@ -8,7 +8,7 @@ import Foundation
 import LispInterpreterCore
 
 let interpreter = Interpreter()
-let input = "(- 20 1 4)"
+let input = "()"
 
 // Parsers breaks input into pieces
 let tokens = Parser.tokenize(input)
