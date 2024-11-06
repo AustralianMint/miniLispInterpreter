@@ -48,4 +48,13 @@ final class miniLispInterpreterTests: XCTestCase {
         }
         XCTAssertEqual(value, -4)
     }
+    
+    func testEmptyList() throws {
+        let input = "()"
+        let tokens = Parser.tokenize(input)
+        let (parsed, _) = try Parser.parse(tokens)
+        let result = try interpreter.evaluate(parsed)
+        
+        XCTAssertEqual(result, .null, "Empty list should evaluate to null")
+    }
 }
