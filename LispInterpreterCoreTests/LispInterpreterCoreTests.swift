@@ -21,6 +21,17 @@ final class miniLispInterpreterTests: XCTestCase {
         XCTAssertNotNil(interpreter)
     }
     
+    func testEmptyList() throws {
+        let input = "()"
+        let tokens = Parser.tokenize(input)
+        let (parsed, _) = try Parser.parse(tokens)
+        let result = try interpreter.evaluate(parsed)
+        
+        XCTAssertEqual(result, .null, "Empty list should evaluate to null")
+    }
+    
+    // MARK: Arithmetic Tests
+    
     func testAddition() throws {
         // Test basic addition
         let input = "(+ 1 2 3)"
@@ -33,6 +44,19 @@ final class miniLispInterpreterTests: XCTestCase {
             return
         }
         XCTAssertEqual(value, 6)
+    }
+
+    func testAdditionWithNoArgs() throws {
+        let input = "(+)"
+        let tokens = Parser.tokenize(input)
+        let (parsed, _) = try Parser.parse(tokens)
+        let result = try interpreter.evaluate(parsed)
+        
+        guard case .number(let value) = result else {
+            XCTFail("Expected .number, got \(result)")
+            return
+        }
+        XCTAssertEqual(value, 0, "Addition with no args should return 0")
     }
     
     func testSubtraction() throws {
@@ -49,12 +73,17 @@ final class miniLispInterpreterTests: XCTestCase {
         XCTAssertEqual(value, -4)
     }
     
-    func testEmptyList() throws {
-        let input = "()"
+    func testSubtractionWithNoArgs() throws {
+        let input = "(-)"
         let tokens = Parser.tokenize(input)
         let (parsed, _) = try Parser.parse(tokens)
-        let result = try interpreter.evaluate(parsed)
         
-        XCTAssertEqual(result, .null, "Empty list should evaluate to null")
+        XCTAssertThrowsError(try interpreter.evaluate(parsed)) { error in
+            guard case let LispError.typeError(message) = error else {
+                XCTFail("Expected typeError, got \(error)")
+                return
+            }
+            XCTAssertTrue(message.contains("Expected at least one argument"))
+        }
     }
 }
