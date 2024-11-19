@@ -7,6 +7,7 @@
 // The brain that actually does the calculations
 
 public class Interpreter {
+    // Storing values conforming to my LispValues
     var environment: [String: LispValue] = [:]
     
     init () {
@@ -45,7 +46,7 @@ public class Interpreter {
             
         case .symbol(let name):
             guard let value = environment[name] else {
-                throw LispError.nameError("Unknown symbol \(name)")
+                throw LispError.nameError("Unknown symbol: \(name)")
             }
             return value
             
