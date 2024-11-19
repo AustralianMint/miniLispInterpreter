@@ -5,18 +5,18 @@
 //  Created by Thomas Frey on 04.11.24.
 //
 import Foundation
-import LispInterpreterCore
 
-let interpreter = Interpreter()
-let input = "()"
+func evaluateExpression(_ input: String) {
+    let interpreter = Interpreter()
+    
+    do {
+        let tokens = Parser.tokenize(input)
+        let (parsed, _) = try Parser.parse(tokens)
+        let result = try interpreter.evaluate(parsed)
+        print("Result: \(result)")
+    } catch {
+        print("Error: \(error)")
+    }
+}
 
-// Parsers breaks input into pieces
-let tokens = Parser.tokenize(input)
-
-// Parser organizes into a structure
-let (parsed, _) = try Parser.parse(tokens)
-
-// Interpreter calculates the result
-let result = try interpreter.evaluate(parsed)
-print(result)
-
+evaluateExpression("(+ 1 2 3)")
