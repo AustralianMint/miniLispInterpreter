@@ -26,6 +26,8 @@ public class Parser {
             var list: [LispValue] = []
             var currentTokens = remaining
             
+            // Needed to recursively add parsed tokens to a list
+            // Output: .list([.symbol("+"), .number(1), .number(2)])
             while !currentTokens.isEmpty && currentTokens[0] != ")" {
                 let (value, remainingTokens) = try parse(currentTokens)
                 list.append(value)
