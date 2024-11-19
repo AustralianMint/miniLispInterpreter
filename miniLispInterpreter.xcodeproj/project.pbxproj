@@ -76,6 +76,13 @@
 			);
 			target = 27E0DE602CD907BE0027DCA3 /* miniLispInterpreter */;
 		};
+		27E22B062CDF7FAE00C3174C /* Exceptions for "miniLispInterpreter" folder in "LispInterpreterCore" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				main.swift,
+			);
+			target = 278C031C2CDA428E006A9DB6 /* LispInterpreterCore */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -95,6 +102,9 @@
 		};
 		27E0DE632CD907BE0027DCA3 /* miniLispInterpreter */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				27E22B062CDF7FAE00C3174C /* Exceptions for "miniLispInterpreter" folder in "LispInterpreterCore" target */,
+			);
 			path = miniLispInterpreter;
 			sourceTree = "<group>";
 		};
