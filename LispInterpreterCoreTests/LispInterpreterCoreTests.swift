@@ -30,7 +30,7 @@ final class miniLispInterpreterTests: XCTestCase {
         XCTAssertEqual(result, .null, "Empty list should evaluate to null")
     }
     
-    // MARK: Arithmetic Tests
+    // MARK: - Addition Tests
     
     func testAddition() throws {
         // Test basic addition
@@ -59,6 +59,21 @@ final class miniLispInterpreterTests: XCTestCase {
         XCTAssertEqual(value, 0, "Addition with no args should return 0")
     }
     
+    func testAdditionWithOneArgs() throws {
+        let input = "(+ 4)"
+        let tokens = Parser.tokenize(input)
+        let (parsed, _) = try Parser.parse(tokens)
+        let result = try interpreter.evaluate(parsed)
+        
+        guard case .number(let value) = result else {
+            XCTFail("Expected .number, got \(result)")
+            return
+        }
+        XCTAssertEqual(value, 4)
+    }
+    
+    // MARK: - Subtraction Tests
+    
     func testSubtraction() throws {
         // Test basic subtraction
         let input = "(- 1 2 3)"
@@ -86,4 +101,47 @@ final class miniLispInterpreterTests: XCTestCase {
             XCTAssertTrue(message.contains("Expected at least one argument"))
         }
     }
+    
+    func testSubtractionWithOneArgs() throws {
+        let input = "(- 4)"
+        let tokens = Parser.tokenize(input)
+        let (parsed, _) = try Parser.parse(tokens)
+        let result = try interpreter.evaluate(parsed)
+        
+        guard case .number(let value) = result else {
+            XCTFail("Expected .number, got \(result)")
+            return
+        }
+        XCTAssertEqual(value, 4)
+    }
+    
+    // MARK: - Error Handling
+    
+    func testInvalidOpertaor() throws {
+        let input = (" % 2 3")
+        let tokens = Parser.tokenize(input)
+        let (parsed, _) = try Parser.parse(tokens)
+        
+        XCTAssertThrowsError(try interpreter.evaluate(parsed)) { error in
+            guard case let LispError.nameError(message) = error else {
+                XCTFail("Expected typeError, got \(error)")
+                return
+            }
+            XCTAssertEqual(message, "Unknown symbol: %")
+        }
+    }
+    
+//    func testNonNumericOperator() throws {
+//        let input = ("+ \"two\" 3")
+//        let tokens = Parser.tokenize(input)
+//        let (parsed, _) = try Parser.parse(tokens)
+//        
+//        XCTAssertThrowsError(try interpreter.evaluate(parsed)) { error in
+//            guard case let LispError.typeError(message) = error else {
+//                XCTFail("Expected typeError, got \(error)")
+//                return
+//            }
+//            XCTAssertTrue(message.contains("Expected a number"))
+//        }
+//    }
 }
