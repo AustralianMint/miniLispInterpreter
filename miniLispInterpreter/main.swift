@@ -19,4 +19,4 @@ func evaluateExpression(_ input: String) {
     }
 }
 
-evaluateExpression("(+ 1 2 3)")
+evaluateExpression("(+ (- 4 2) 3)")
